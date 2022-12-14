@@ -38,4 +38,16 @@ export default class ExercisesController {
             res.status(500).json({ error: e.message })
         }
     }
+
+    static async apiDeleteExercise(req, res, next) {
+        try {
+            const exerciseId = req.query.id
+            console.log(exerciseId)
+            const response = await ExercisesDAO.deleteExercise(exerciseId)
+
+            res.json({ status: "success"})
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

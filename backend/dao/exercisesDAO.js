@@ -63,4 +63,17 @@ export default class ExercisesDAO {
             return { error: e }
         }
     }
+
+    static async deleteExercise(exerciseId) {
+        try {
+            const response = await exercises.deleteOne({
+                _id: ObjectId(exerciseId)
+            })
+
+            return response
+        } catch (e) {
+            console.error(`Unable to delete exercise: ${e}`)
+            return { error: e }
+        }
+    }
 }
