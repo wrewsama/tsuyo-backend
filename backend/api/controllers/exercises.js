@@ -26,4 +26,16 @@ export default class ExercisesController {
 
         res.json(response)
     }
+
+    static async apiPostExercise(req, res, next) {
+        try {
+            const name = req.body.name
+            const desc = req.body.desc
+
+            const response = await ExercisesDAO.addExercise(name, desc)
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

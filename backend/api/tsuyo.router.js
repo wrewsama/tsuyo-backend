@@ -5,5 +5,6 @@ const router = express.Router()
 
 // set up routes
 router.route('/').get(ExercisesController.apiGetExercises)
+                 .post(ExercisesController.apiPostExercise)
 
 export default router

@@ -49,4 +49,18 @@ export default class ExercisesDAO {
             return { exerciseList: [], numExercises: 0 }
         }
     }
+
+    static async addExercise(name, desc) {
+        try {
+            const newDoc = {
+                name: name,
+                desc: desc
+            }
+
+            return await exercises.insertOne(newDoc)
+        } catch(e) {
+            console.error(`Unable to post review ${e}`)
+            return { error: e }
+        }
+    }
 }
