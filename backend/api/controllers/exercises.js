@@ -50,4 +50,22 @@ export default class ExercisesController {
             res.status(500).json({ error: e.message })
         }
     }
+
+    static async apiUpdateExercise(req, res, next) {
+        try {
+            const exerciseId = req.body.id
+            const name = req.body.name
+            const desc = req.body.desc
+
+            const response = await ExercisesDAO.updateExercise(exerciseId, name, desc)
+
+            let { error } = response
+            if (error) {
+                res.status(400).json({ error })
+            }
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

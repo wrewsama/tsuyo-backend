@@ -7,5 +7,6 @@ const router = express.Router()
 router.route('/').get(ExercisesController.apiGetExercises)
                  .post(ExercisesController.apiPostExercise)
                  .delete(ExercisesController.apiDeleteExercise)
+                 .put(ExercisesController.apiUpdateExercise)
 
 export default router

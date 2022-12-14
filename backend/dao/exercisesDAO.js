@@ -76,4 +76,22 @@ export default class ExercisesDAO {
             return { error: e }
         }
     }
+
+    static async updateExercise(exerciseId, name, desc) {
+        try {
+            const response = await exercises.updateOne(
+                { _id: ObjectId(exerciseId) },
+                {
+                    $set: {
+                        name: name,
+                        desc: desc
+                    }
+                }
+            )
+            return response
+        } catch (e) {
+            console.error(`Unable to update exercise: ${e}`)
+            return { error: e }
+        }
+    }
 }
