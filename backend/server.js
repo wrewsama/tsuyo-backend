@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 // set up intiial routes
-app.use("api/v1/tsuyo")
+app.use("/api/v1/tsuyo", router)
 app.use("*", (req, res) => res.status(404).json({ error: "not found" }))
 
 export default app
