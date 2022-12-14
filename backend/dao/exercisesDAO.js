@@ -24,6 +24,7 @@ export default class ExercisesDAO {
     } = {}) {
         let query
         if ("name" in filters) {
+            // mongodb atlas text search
             query = { $text: { $search: filters["name"] } }
         }
 
@@ -40,7 +41,7 @@ export default class ExercisesDAO {
 
         try {
             const exerciseList = await displayCursor.toArray()
-            const numExercises = await exerciseList.countDocuments(query)
+            const numExercises = await exercises.countDocuments(query)
 
             return { exerciseList, numExercises }
         } catch (e) {
