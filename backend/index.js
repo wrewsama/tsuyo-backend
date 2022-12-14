@@ -1,6 +1,7 @@
 import app from "./server.js"
 import mongodb from "mongodb"
 import dotenv from "dotenv"
+import ExercisesDAO from "./dao/exercisesDAO.js"
 
 // load in environment vars
 dotenv.config()
@@ -24,6 +25,7 @@ MongoClient.connect(
     process.exit(1)
 })
 .then(async client => {
+    await ExercisesDAO.injectDB(client)
     // start the web server
     app.listen(port, () => {
         console.log(`listening on port ${port}`)
