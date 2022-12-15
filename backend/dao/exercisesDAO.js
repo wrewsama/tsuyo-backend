@@ -1,4 +1,5 @@
 import Exercise from "../models/exercises.js"
+import mongodb from "mongodb"
 
 const ObjectId = mongodb.ObjectId
 
