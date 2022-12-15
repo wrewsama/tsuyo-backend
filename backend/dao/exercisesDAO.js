@@ -1,63 +1,36 @@
 
 import mongodb from "mongodb"
+import ExerciseModel from "../models/exercises.js"
+
 const ObjectId = mongodb.ObjectId
-let exercises
 
 export default class ExercisesDAO {
-    static async injectDB(conn) {
-        if (exercises) {
-          return
-        }
-        try {
-            exercises = await conn.db(process.env.TSUYO_NS).collection("exercises")
-        } catch (e) {
-          console.error(
-            `Unable to establish a collection handle in exercisesDAO: ${e}`,
-          )
-        }
-    }
 
-    static async getExercises({
-        filters = null,
-        page = 0,
-        exercisesPerPage = 20
-    } = {}) {
+    static async getExercises(filters) {
         let query
         if ("name" in filters) {
             // mongodb atlas text search
             query = { $text: { $search: filters["name"] } }
         }
 
-        let cursor
-
         try {
-            cursor = await exercises.find(query)
+            return await ExerciseModel.find(query)
         } catch (e) {
             console.error(`Unable to issue find command, ${e}`)
-            return { exerciseList: [], numExercises: 0 }
-        }
-
-        const displayCursor = cursor.limit(exercisesPerPage).skip(exercisesPerPage * page)
-
-        try {
-            const exerciseList = await displayCursor.toArray()
-            const numExercises = await exercises.countDocuments(query)
-
-            return { exerciseList, numExercises }
-        } catch (e) {
-            console.error(`Unable to convert cursor to array or problem counting documents ${e}`)
-            return { exerciseList: [], numExercises: 0 }
+            return { error: e }
         }
     }
 
     static async addExercise(name, desc) {
         try {
-            const newDoc = {
+            const newExercise = new ExerciseModel({
                 name: name,
                 desc: desc
-            }
+            })
 
-            return await exercises.insertOne(newDoc)
+            await newExercise.save()
+
+            return { status: "success" }
         } catch(e) {
             console.error(`Unable to post review ${e}`)
             return { error: e }
@@ -66,11 +39,10 @@ export default class ExercisesDAO {
 
     static async deleteExercise(exerciseId) {
         try {
-            const response = await exercises.deleteOne({
+            await ExerciseModel.deleteOne({
                 _id: ObjectId(exerciseId)
             })
-
-            return response
+            return { status: "success" }
         } catch (e) {
             console.error(`Unable to delete exercise: ${e}`)
             return { error: e }
@@ -79,7 +51,7 @@ export default class ExercisesDAO {
 
     static async updateExercise(exerciseId, name, desc) {
         try {
-            const response = await exercises.updateOne(
+            await ExerciseModel.updateOne(
                 { _id: ObjectId(exerciseId) },
                 {
                     $set: {
@@ -88,7 +60,7 @@ export default class ExercisesDAO {
                     }
                 }
             )
-            return response
+            return { status: "success" }
         } catch (e) {
             console.error(`Unable to update exercise: ${e}`)
             return { error: e }
