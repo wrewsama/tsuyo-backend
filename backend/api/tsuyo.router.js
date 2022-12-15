@@ -11,5 +11,6 @@ router.route('/exercises').get(ExercisesController.apiGetExercises)
                           .put(ExercisesController.apiUpdateExercise)
 
 router.route('/workouts').post(WorkoutsController.apiPostWorkout)
+                         .get(WorkoutsController.apiGetWorkouts)
 
 export default router

@@ -10,4 +10,10 @@ export default class WorkoutsController {
             res.status(500).json({ error: e.message })
         }
     }
+
+    static async apiGetWorkouts(req, res, next) {
+        const response = await WorkoutsDAO.getWorkouts()
+
+        res.json(response)
+    }
 }

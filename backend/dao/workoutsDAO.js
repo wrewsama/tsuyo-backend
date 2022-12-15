@@ -12,8 +12,17 @@ export default class WorkoutsDAO {
 
             await newWorkout.save()
             return { status: "success" }
-        } catch(e) {
+        } catch (e) {
             console.error(`Unable to add workout ${e}`)
+            return { error: e }
+        }
+    }
+
+    static async getWorkouts() {
+        try {
+            return await Workout.find({}).sort({date: 'desc'})
+        } catch (e) {
+            console.error(`Unable to issue find command, ${e}`)
             return { error: e }
         }
     }
