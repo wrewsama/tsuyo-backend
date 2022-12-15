@@ -1,6 +1,4 @@
-
-import mongodb from "mongodb"
-import ExerciseModel from "../models/exercises.js"
+import Exercise from "../models/exercises.js"
 
 const ObjectId = mongodb.ObjectId
 
@@ -14,7 +12,7 @@ export default class ExercisesDAO {
         }
 
         try {
-            return await ExerciseModel.find(query)
+            return await Exercise.find(query)
         } catch (e) {
             console.error(`Unable to issue find command, ${e}`)
             return { error: e }
@@ -23,7 +21,7 @@ export default class ExercisesDAO {
 
     static async addExercise(name, desc) {
         try {
-            const newExercise = new ExerciseModel({
+            const newExercise = new Exercise({
                 name: name,
                 desc: desc
             })
@@ -39,7 +37,7 @@ export default class ExercisesDAO {
 
     static async deleteExercise(exerciseId) {
         try {
-            await ExerciseModel.deleteOne({
+            await Exercise.deleteOne({
                 _id: ObjectId(exerciseId)
             })
             return { status: "success" }
@@ -51,7 +49,7 @@ export default class ExercisesDAO {
 
     static async updateExercise(exerciseId, name, desc) {
         try {
-            await ExerciseModel.updateOne(
+            await Exercise.updateOne(
                 { _id: ObjectId(exerciseId) },
                 {
                     $set: {
