@@ -30,7 +30,7 @@ export default class ExercisesDAO {
 
             return { status: "success" }
         } catch(e) {
-            console.error(`Unable to post review ${e}`)
+            console.error(`Unable to add exercise ${e}`)
             return { error: e }
         }
     }
