@@ -16,4 +16,15 @@ export default class WorkoutsController {
 
         res.json(response)
     }
+
+    static async apiDeleteWorkout(req, res, next) {
+        try {
+            const workoutId = req.query.id
+            const response = await WorkoutsDAO.deleteWorkout(workoutId)
+
+            res.json({ status: "success"})
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

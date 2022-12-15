@@ -26,4 +26,17 @@ export default class WorkoutsDAO {
             return { error: e }
         }
     }
+
+    static async deleteWorkout(workoutId) {
+        try {
+            await Workout.deleteOne({
+                _id: ObjectId(workoutId)
+            })
+            return { status: "success" }
+        } catch (e) {
+            console.error(`Unable to delete workout: ${e}`)
+            return { error: e }
+        }
+
+    }
 }
