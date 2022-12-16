@@ -10,7 +10,7 @@ export default class SetsController {
 
             const response = await setsDAO.addSet(wid, eid, weight, reps)
             
-            var { error } = response
+            let { error } = response
             if (error) {
                 res.status(400).json({ error })
             }
