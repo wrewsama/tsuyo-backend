@@ -26,4 +26,20 @@ export default class SetsController {
 
         res.json(response)
     }
+
+    static async apiDeleteSet(req, res, next) {
+        try {
+            const setId = req.query.id
+            const response = await SetsDAO.deleteSet(setId)
+
+            let { error } = response
+            if (error) {
+                res.status(400).json({ error })
+            }
+            
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

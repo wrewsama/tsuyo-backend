@@ -30,4 +30,17 @@ export default class SetDAO {
             return { error: e }
         }
     }
+
+    static async deleteSet(setId) {
+        try {
+            await Set.deleteOne({
+                _id: ObjectId(setId)
+            })
+            return { status: "success" }
+        } catch (e) {
+            console.error(`Unable to delete set: ${e}`)
+            return { error: e }
+        }
+
+    }
 }
