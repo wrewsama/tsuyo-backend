@@ -17,6 +17,12 @@ export default class ExercisesController {
             const desc = req.body.desc
 
             const response = await ExercisesDAO.addExercise(name, desc)
+
+            let { error } = response
+            if (error) {
+                res.status(400).json({ error })
+            }
+
             res.json({ status: "success" })
         } catch (e) {
             res.status(500).json({ error: e.message })
@@ -29,6 +35,11 @@ export default class ExercisesController {
             console.log(exerciseId)
             const response = await ExercisesDAO.deleteExercise(exerciseId)
 
+            let { error } = response
+            if (error) {
+                res.status(400).json({ error })
+            }
+            
             res.json({ status: "success"})
         } catch (e) {
             res.status(500).json({ error: e.message })
