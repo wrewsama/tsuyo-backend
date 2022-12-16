@@ -42,4 +42,22 @@ export default class SetsController {
             res.status(500).json({ error: e.message })
         }
     }
+
+    static async apiUpdateSet(req, res, next) {
+        try {
+            const setId = req.body.id
+            const weight = req.body.weight
+            const reps = req.body.reps
+
+            const response = await SetsDAO.updateSet(setId, weight, reps)
+
+            let { error } = response
+            if (error) {
+                res.status(400).json({ error })
+            }
+            res.json({ status: "success" })
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
 }

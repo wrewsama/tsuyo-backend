@@ -43,4 +43,22 @@ export default class SetDAO {
         }
 
     }
+
+    static async updateSet(setId, weight, reps) {
+        try {
+            await Set.updateOne(
+                {_id: ObjectId(setId)},
+                {
+                    $set: {
+                        weight: weight,
+                        reps: reps
+                    }
+                }
+            )
+            return { status: "success" }
+        } catch (e) {
+            console.error(`Unable to update set: ${e}`)
+            return { error: e }
+        }
+    }
 }
