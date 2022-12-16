@@ -16,5 +16,5 @@ router.route('/workouts').post(WorkoutsController.apiPostWorkout)
                          .delete(WorkoutsController.apiDeleteWorkout)
 
 router.route('/sets').post(SetsController.apiPostSet)
-
+                     .get(SetsController.apiGetSets)
 export default router

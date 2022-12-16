@@ -1,4 +1,4 @@
-import setsDAO from '../../dao/setsDAO.js'
+import SetsDAO from '../../dao/setsDAO.js'
 
 export default class SetsController {
     static async apiPostSet(req, res, next) {
@@ -8,7 +8,7 @@ export default class SetsController {
             const weight = req.body.weight
             const reps = req.body.reps
 
-            const response = await setsDAO.addSet(wid, eid, weight, reps)
+            const response = await SetsDAO.addSet(wid, eid, weight, reps)
             
             let { error } = response
             if (error) {
@@ -19,5 +19,11 @@ export default class SetsController {
         } catch (e) {
             res.status(500).json({ error: e.message })
         }
+    }
+
+    static async apiGetSets(req, res, next) {
+        const response = await SetsDAO.getSets()
+
+        res.json(response)
     }
 }

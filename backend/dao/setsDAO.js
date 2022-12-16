@@ -21,4 +21,13 @@ export default class SetDAO {
             return { error: e }
         }
     }
+
+    static async getSets() {
+        try {
+            return await Set.find({})
+        } catch (e) {
+            console.error(`Unable to issue find command, ${e}`)
+            return { error: e }
+        }
+    }
 }
