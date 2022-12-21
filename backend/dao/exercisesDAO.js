@@ -13,10 +13,11 @@ export default class ExercisesDAO {
         }
 
         try {
-            return await Exercise.find(query)
+            const exercises = await Exercise.find(query)
+            return { exercises: exercises }
         } catch (e) {
             console.error(`Unable to issue find command, ${e}`)
-            return { error: e }
+            return { exercises: [] }
         }
     }
 
