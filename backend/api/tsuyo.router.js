@@ -11,6 +11,8 @@ router.route('/exercises').get(ExercisesController.apiGetExercises)
                           .delete(ExercisesController.apiDeleteExercise)
                           .put(ExercisesController.apiUpdateExercise)
 
+router.route('/exercises/:id').get(ExercisesController.apiGetExerciseById)
+
 router.route('/workouts').post(WorkoutsController.apiPostWorkout)
                          .get(WorkoutsController.apiGetWorkouts)
                          .delete(WorkoutsController.apiDeleteWorkout)
