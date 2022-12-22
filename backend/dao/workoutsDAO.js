@@ -10,8 +10,12 @@ export default class WorkoutsDAO {
                 date: date
             })
 
+            let id
             await newWorkout.save()
-            return { status: "success" }
+                .then(workout => {
+                    id = workout._id
+                })
+            return { status: "success", id: id }
         } catch (e) {
             console.error(`Unable to add workout ${e}`)
             return { error: e }
