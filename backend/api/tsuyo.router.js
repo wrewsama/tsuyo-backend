@@ -21,4 +21,6 @@ router.route('/sets').post(SetsController.apiPostSet)
                      .get(SetsController.apiGetSets)
                      .delete(SetsController.apiDeleteSet)
                      .put(SetsController.apiUpdateSet)
+
+router.route('/sets/:eid').get(SetsController.apiGetSetsByExerciseId)
 export default router

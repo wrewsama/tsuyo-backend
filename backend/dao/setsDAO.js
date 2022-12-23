@@ -31,6 +31,16 @@ export default class SetDAO {
         }
     }
 
+    static async getSetsByExerciseId(exerciseId) {
+        try {
+            const sets = await Set.find({ exerciseId: exerciseId })
+            return { sets: sets }
+        } catch (e) {
+            console.error(`Unable to issue find command, ${e}`)
+            return { error: e }
+        }
+    }
+
     static async deleteSet(setId) {
         try {
             await Set.deleteOne({

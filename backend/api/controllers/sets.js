@@ -27,6 +27,22 @@ export default class SetsController {
         res.json(response)
     }
 
+    static async apiGetSetsByExerciseId(req, res, next) {
+        try {
+            let exerciseId = req.params.eid || {}
+            const response = await SetsDAO.getSetsByExerciseId(exerciseId)
+
+            let { error } = response
+            if (error) {
+                res.status(400).json({ error })
+            }
+
+            res.json(response)
+        } catch (e) {
+            res.status(500).json({ error: e.message })
+        }
+    }
+
     static async apiDeleteSet(req, res, next) {
         try {
             const setId = req.query.id
