@@ -11,6 +11,21 @@ export default class ExercisesController {
         res.json(response)
     }
 
+    static async apiGetExerciseById(req, res, next) {
+        try {
+            let id = req.params.id || {}
+            let exercise = await ExercisesDAO.getExerciseById(id)
+
+            if (!exercise) {
+                res.status(404).json({ error: "Not found" })
+                return
+            }
+            res.json(exercise)
+        } catch (e) {
+            res.status(500).json({ error: e })
+        }
+    }
+
     static async apiPostExercise(req, res, next) {
         try {
             const name = req.body.name

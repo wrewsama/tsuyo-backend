@@ -21,6 +21,16 @@ export default class ExercisesDAO {
         }
     }
 
+    static async getExerciseById(id) {
+        try {
+            const exercise = await Exercise.findById(id)
+            return exercise
+        } catch(e) {
+            console.error(`Unable to find exercise ${e}`)
+            return { error: e }
+        }
+    }
+
     static async addExercise(name, desc) {
         try {
             const newExercise = new Exercise({
