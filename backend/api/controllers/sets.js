@@ -30,11 +30,12 @@ export default class SetsController {
     static async apiGetSetsByExerciseId(req, res, next) {
         try {
             let exerciseId = req.params.eid || {}
-            const response = await SetsDAO.getSetsByExerciseId(exerciseId)
+            let response = await SetsDAO.getSetsByExerciseId(exerciseId)
 
             let { error } = response
             if (error) {
                 res.status(400).json({ error })
+                return
             }
 
             res.json(response)
