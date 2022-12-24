@@ -1,6 +1,12 @@
 import WorkoutsDAO from "../../dao/workoutsDAO.js"
 
+/**
+ * Handles the API requests to the /workouts route.
+ */
 export default class WorkoutsController {
+    /**
+     * Adds a workout to the database.
+     */
     static async apiPostWorkout(req, res, next) {
         try {
             const date = req.body.date
@@ -17,12 +23,21 @@ export default class WorkoutsController {
         }
     }
 
+    /**
+     * Gets all the workouts in the database.
+     */
     static async apiGetWorkouts(req, res, next) {
         const response = await WorkoutsDAO.getWorkouts()
 
         res.json(response)
     }
 
+    /**
+     * Gets the Workout with the given id.
+     * 
+     * Takes the id from the url's params and sends the corresponding Workout
+     * document in the response.
+     */
     static async apiGetWorkoutById(req, res, next) {
         try {
             let id = req.params.id || {}
@@ -38,6 +53,12 @@ export default class WorkoutsController {
         }
     }
 
+    /**
+     * Deletes a Workout from the database.
+     * 
+     * Gets the id from the url's query part and sends the corresponding
+     * Workout document to the response.
+     */
     static async apiDeleteWorkout(req, res, next) {
         try {
             const workoutId = req.query.id
