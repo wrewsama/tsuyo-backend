@@ -1,6 +1,12 @@
 import SetsDAO from '../../dao/setsDAO.js'
 
+/**
+ * Handles the API requests to the /sets route.
+ */
 export default class SetsController {
+    /**
+     * Adds a set to the database.
+     */
     static async apiPostSet(req, res, next) {
         try {
             const wid = req.body.workoutId
@@ -21,12 +27,21 @@ export default class SetsController {
         }
     }
 
+    /**
+     * Gets all the Sets in the database.
+     */
     static async apiGetSets(req, res, next) {
         const response = await SetsDAO.getSets()
 
         res.json(response)
     }
 
+    /**
+     * Gets all the Sets in the database matching a given exercise id.
+     * 
+     * Takes the id from the url's params and sends an array containing
+     * all the Sets for that exercise in the response.
+     */
     static async apiGetSetsByExerciseId(req, res, next) {
         try {
             let exerciseId = req.params.eid || {}
@@ -44,6 +59,12 @@ export default class SetsController {
         }
     }
 
+    /**
+     * Deletes a Set from the database.
+     * 
+     * Takes the id from the url's query part and deletes the corresponding
+     * Set document from the database,
+     */
     static async apiDeleteSet(req, res, next) {
         try {
             const setId = req.query.id
@@ -60,6 +81,9 @@ export default class SetsController {
         }
     }
 
+    /**
+     * Updates a Set in the database.
+     */
     static async apiUpdateSet(req, res, next) {
         try {
             const setId = req.body.id
