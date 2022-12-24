@@ -4,7 +4,7 @@ import WorkoutsController from "./controllers/workouts.js"
 import SetsController from "./controllers/sets.js"
 
 /**
- * This class defines the API routes used by tsuyo.
+ * This router defines the API routes used by tsuyo.
  */
 
 const router = express.Router()
