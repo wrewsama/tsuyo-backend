@@ -17,7 +17,7 @@ export default class SetDAO {
      * @param {String} exerciseId The id of the exercise this Set is for.
      * @param {Number} weight The weight used for this Set.
      * @param {Number} reps The number of repetitions performed for this Set.
-     * @returns success if the Exercise is successfully added
+     * @returns success if the Set is successfully added
      *          error otherwise
      */
     static async addSet(workoutId, exerciseId, weight, reps) {
@@ -73,7 +73,7 @@ export default class SetDAO {
      * Deletes a Set document from the database.
      * 
      * @param {String} setId The id of the Set to be deleted.
-     * @returns success if the Exercise is successfully added
+     * @returns success if the Set is successfully deleted
      *          error otherwise
      */
     static async deleteSet(setId) {
@@ -96,7 +96,7 @@ export default class SetDAO {
      * @param {*} setId The id of the Set to be updated.
      * @param {*} weight The new weight of the Set.
      * @param {*} reps  The new number of reps for the Set.
-     * @returns success if the Exercise is successfully added
+     * @returns success if the Set is successfully updated
      *          error otherwise
      */
     static async updateSet(setId, weight, reps) {
