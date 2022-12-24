@@ -31,6 +31,16 @@ export default class WorkoutsDAO {
         }
     }
 
+    static async getWorkoutById(id) {
+        try {
+            const workout = await Workout.findById(id)
+            return workout
+        } catch(e) {
+            console.error(`Unable to find workout ${e}`)
+            return { error: e }
+        }
+    }
+
     static async deleteWorkout(workoutId) {
         try {
             await Workout.deleteOne({

@@ -23,6 +23,21 @@ export default class WorkoutsController {
         res.json(response)
     }
 
+    static async apiGetWorkoutById(req, res, next) {
+        try {
+            let id = req.params.id || {}
+            let workout = await WorkoutsDAO.getWorkoutById(id)
+
+            if (!workout) {
+                res.status(404).json({ error: "Not found" })
+                return
+            }
+            res.json(workout)
+        } catch (e) {
+            res.status(500).json({ error: e })
+        }
+    }
+
     static async apiDeleteWorkout(req, res, next) {
         try {
             const workoutId = req.query.id
