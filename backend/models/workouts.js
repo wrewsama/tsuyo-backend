@@ -1,5 +1,8 @@
 import mongoose from "mongoose"
 
+/**
+ * This object defines the schema for an Workout.
+ */
 const schema = new mongoose.Schema({
     date: {type: Date, default: Date.now}
 })

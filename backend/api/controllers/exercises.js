@@ -1,6 +1,12 @@
 import ExercisesDAO from "../../dao/exercisesDAO.js"
 
+/**
+ * Handles the API requests to the /exercises route.
+ */
 export default class ExercisesController {
+    /**
+     * Gets all the Exercises in the database.
+     */
     static async apiGetExercises(req, res, next) {
         let filters = {}
         if (req.query.name) {
@@ -11,6 +17,9 @@ export default class ExercisesController {
         res.json(response)
     }
 
+    /**
+     * Gets the Exercise matching the id given in the url params.
+     */
     static async apiGetExerciseById(req, res, next) {
         try {
             let id = req.params.id || {}
@@ -26,6 +35,9 @@ export default class ExercisesController {
         }
     }
 
+    /**
+     * Adds a new Exercise to the database.
+     */
     static async apiPostExercise(req, res, next) {
         try {
             const name = req.body.name
@@ -44,6 +56,12 @@ export default class ExercisesController {
         }
     }
 
+    /**
+     * Deletes an Exercise from the database.
+     * 
+     * Gets the exercise's id from the query part of the url, then deletes
+     * that document from the database.
+     */
     static async apiDeleteExercise(req, res, next) {
         try {
             const exerciseId = req.query.id
@@ -61,6 +79,9 @@ export default class ExercisesController {
         }
     }
 
+    /**
+     * Updates an Exercise in the database.
+     */
     static async apiUpdateExercise(req, res, next) {
         try {
             const exerciseId = req.body.id
