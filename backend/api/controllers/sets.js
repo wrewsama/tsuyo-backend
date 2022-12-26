@@ -21,7 +21,7 @@ export default class SetsController {
                 res.status(400).json({ error })
             }
             
-            res.json({ status: "success" })
+            res.json(response)
         } catch (e) {
             res.status(500).json({ error: e.message })
         }

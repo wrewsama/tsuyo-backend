@@ -17,7 +17,7 @@ export default class SetDAO {
      * @param {String} exerciseId The id of the exercise this Set is for.
      * @param {Number} weight The weight used for this Set.
      * @param {Number} reps The number of repetitions performed for this Set.
-     * @returns success if the Set is successfully added
+     * @returns success and the set if the Set is successfully added
      *          error otherwise
      */
     static async addSet(workoutId, exerciseId, weight, reps) {
@@ -29,9 +29,13 @@ export default class SetDAO {
                 reps: reps
             })
 
-            newSet.save()
+            let set
+            await newSet.save()
+                .then(res => {
+                    set = res
+                })
 
-            return { status: "success" }
+            return { status: "success", set: set}
         } catch (e) {
             console.error(`Unable to add set ${e}`)
             return { error: e }
