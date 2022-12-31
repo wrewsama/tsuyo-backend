@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import bcrypt from "bcrypt"
+import validator from "validator"
 
 /**
  * This object defines the schema for an User.
@@ -17,6 +18,15 @@ const schema = new mongoose.Schema({
 })
 
 schema.statics.signup = async function (email, password) {
+    // validation
+    if (!email || !password) {
+        throw Error("All fields must be filled!")
+    }
+    
+    if (!validator.isEmail(email)) {
+        throw Error("Invalid email!")
+    }
+
     const exists = await this.findOne({ email })
 
     if (exists) {
