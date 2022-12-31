@@ -7,8 +7,16 @@ export default class UserDAO {
         return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' })
     }
 
-    static async loginUser() {
-        // TODO
+    static async loginUser(email, password) {
+        try {
+            const user = await User.login(email, password)
+            const token = this.createToken(user._id)
+
+            return { email, token }
+        } catch (e) {
+            console.error(`Unable to login: ${e}`)
+            return { error: e }
+        }
     }
 
     static async signupUser(email, password) {
