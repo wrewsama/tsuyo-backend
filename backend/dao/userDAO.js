@@ -15,7 +15,7 @@ export default class UserDAO {
             return { email, token }
         } catch (e) {
             console.error(`Unable to login: ${e}`)
-            return { error: e }
+            return { error: e.message }
         }
     }
 
@@ -27,7 +27,7 @@ export default class UserDAO {
             return { email, token }
         } catch (e) {
             console.error(`Unable to signup: ${e}`)
-            return { error: e }
+            return { error: e.message }
         }
     }
 }
