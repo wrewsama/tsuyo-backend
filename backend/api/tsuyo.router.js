@@ -2,12 +2,16 @@ import express from 'express'
 import ExercisesController from "./controllers/exercises.js"
 import WorkoutsController from "./controllers/workouts.js"
 import SetsController from "./controllers/sets.js"
+import requireAuth from '../middleware/requireAuth.js'
 
 /**
  * This router defines the API routes used by tsuyo.
  */
 
 const router = express.Router()
+
+// set up authorisation middleware
+router.use(requireAuth)
 
 // Exercises routes
 router.route('/exercises').get(ExercisesController.apiGetExercises)
