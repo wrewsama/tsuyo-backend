@@ -12,6 +12,9 @@ export default class ExercisesController {
         if (req.query.name) {
             filters.name = req.query.name
         }
+        const userId = req.user._id
+        filters.userId = userId
+        
         const response = await ExercisesDAO.getExercises(filters)
 
         res.json(response)
@@ -42,8 +45,9 @@ export default class ExercisesController {
         try {
             const name = req.body.name
             const desc = req.body.desc
+            const userId = req.user._id
 
-            const response = await ExercisesDAO.addExercise(name, desc)
+            const response = await ExercisesDAO.addExercise(name, desc, userId)
 
             let { error } = response
             if (error) {

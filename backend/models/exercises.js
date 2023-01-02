@@ -5,7 +5,11 @@ import mongoose from "mongoose"
  */
 const schema = new mongoose.Schema({
     name: String,
-    desc: String
+    desc: String,
+    userId: {
+        type: String,
+        required: true
+    }
 })
 
 const model = mongoose.model("Exercise",

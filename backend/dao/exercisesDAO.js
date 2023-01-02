@@ -21,8 +21,12 @@ export default class ExercisesDAO {
         let query
         if ("name" in filters) {
             // mongodb atlas text search
-            query = { $text: { $search: filters["name"] } }
+            query = { $text: { $search: filters["name"] },
+                      userId: filters.userId }
+        } else {
+            query = { userId: filters.userId }
         }
+        
 
         try {
             const exercises = await Exercise.find(query)
@@ -58,11 +62,12 @@ export default class ExercisesDAO {
      * @returns success if the Exercise is successfully added
      *          error otherwise
      */
-    static async addExercise(name, desc) {
+    static async addExercise(name, desc, userId) {
         try {
             const newExercise = new Exercise({
                 name: name,
-                desc: desc
+                desc: desc,
+                userId: userId
             })
 
             await newExercise.save()
