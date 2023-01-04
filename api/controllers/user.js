@@ -1,6 +1,13 @@
 import UserDAO from "../../dao/userDAO.js"
 
+/**
+ * Handles the login and signup API requests.
+ */
 export default class UserController {
+    
+    /**
+     * Processes the user's login request.
+     */
     static async loginUser(req, res, next) {
         try {
             const { email, password } = req.body
@@ -18,6 +25,9 @@ export default class UserController {
         }
     }
 
+    /**
+     * Creates a new user in the database.
+     */
     static async signupUser(req, res, next) {
         try {
             const { email, password } = req.body
