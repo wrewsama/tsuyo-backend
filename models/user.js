@@ -17,6 +17,16 @@ const schema = new mongoose.Schema({
     }
 })
 
+/**
+ * Signs a new user up.
+ * 
+ * Performs input validation, encrypts the password, then saves the document
+ * to the users database.
+ * 
+ * @param {String} email user's email
+ * @param {String} password user's password
+ * @returns The saved user document.
+ */
 schema.statics.signup = async function (email, password) {
     // validation
     if (!email || !password) {
@@ -41,6 +51,16 @@ schema.statics.signup = async function (email, password) {
     return user
 }
 
+/**
+ * Attempts to log a user in.
+ * 
+ * Performs input validation, then checks if the email and password matches
+ * a user in the database.
+ * 
+ * @param {String} email user's email
+ * @param {String} password user's password
+ * @returns The user document.
+ */
 schema.statics.login = async function(email, password) {
     // validation
     if (!email || !password) {
