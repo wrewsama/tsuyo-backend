@@ -16,35 +16,35 @@ const makeRouter = (exercisesDao, workoutsDao, setsDao) => {
     const router = express.Router()
 
     // initialise controllers
-    const exercisesController = new ExercisesController(exercisesDao)
-    const setsController = new SetsController(setsDao)
-    const workoutsController = new WorkoutsController(workoutsDao)
+    ExercisesController.init(exercisesDao)
+    SetsController.init(setsDao)
+    WorkoutsController.init(workoutsDao)
     
     // set up authorisation middleware
     router.use(requireAuth)
     
     // Exercises routes
-    router.route('/exercises').get(exercisesController.apiGetExercises)
-                              .post(exercisesController.apiPostExercise)
-                              .delete(exercisesController.apiDeleteExercise)
-                              .put(exercisesController.apiUpdateExercise)
+    router.route('/exercises').get(ExercisesController.apiGetExercises)
+                              .post(ExercisesController.apiPostExercise)
+                              .delete(ExercisesController.apiDeleteExercise)
+                              .put(ExercisesController.apiUpdateExercise)
     
-    router.route('/exercises/:id').get(exercisesController.apiGetExerciseById)
+    router.route('/exercises/:id').get(ExercisesController.apiGetExerciseById)
     
     // Workouts routes
-    router.route('/workouts').post(workoutsController.apiPostWorkout)
-                             .get(workoutsController.apiGetWorkouts)
-                             .delete(workoutsController.apiDeleteWorkout)
+    router.route('/workouts').post(WorkoutsController.apiPostWorkout)
+                             .get(WorkoutsController.apiGetWorkouts)
+                             .delete(WorkoutsController.apiDeleteWorkout)
     
-    router.route('/workouts/:id').get(workoutsController.apiGetWorkoutById)
+    router.route('/workouts/:id').get(WorkoutsController.apiGetWorkoutById)
     
     // Sets routes
-    router.route('/sets').post(setsController.apiPostSet)
-                         .get(setsController.apiGetSets)
-                         .delete(setsController.apiDeleteSet)
-                         .put(setsController.apiUpdateSet)
+    router.route('/sets').post(SetsController.apiPostSet)
+                         .get(SetsController.apiGetSets)
+                         .delete(SetsController.apiDeleteSet)
+                         .put(SetsController.apiUpdateSet)
     
-    router.route('/sets/:eid').get(setsController.apiGetSetsByExerciseId)
+    router.route('/sets/:eid').get(SetsController.apiGetSetsByExerciseId)
     return router
 }
 
