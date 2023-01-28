@@ -1,12 +1,24 @@
 import express from 'express'
 import UserController from './controllers/user.js'
 
-const userRouter = express.Router()
+/**
+ * Creates a router that defines the API routes used for user auth.
+ * 
+ * @param {Class} userDao Data Access Object for the Users DB
+ * @returns user router
+ */
+const makeUserRouter = (userDao) => {
+    const userRouter = express.Router()
 
-// login
-userRouter.post('/login', UserController.loginUser)
-
-// signup
-userRouter.post('/signup', UserController.signupUser)
-
-export default userRouter 
+    // initialise controller
+    const userController = UserController(userDao)
+    
+    // login
+    userRouter.post('/login', userController.loginUser)
+    
+    // signup
+    userRouter.post('/signup', userController.signupUser)
+    
+    return userRouter 
+}
+export default makeUserRouter
