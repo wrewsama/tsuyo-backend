@@ -7,10 +7,10 @@ import workoutsDAO from "./workoutsDAO.js";
  * Main Data Access Object that encapsulates all the other DAOs
  */
 const mainDAO = {
-    ExercisesDAO,
-    SetsDAO,
-    userDAO,
-    workoutsDAO
+    exercisesDao: ExercisesDAO,
+    setsDao: SetsDAO,
+    usersDao:userDAO,
+    workoutsDao: workoutsDAO
 }
 
 export default mainDAO

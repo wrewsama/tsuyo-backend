@@ -13,10 +13,11 @@ const makeApp = (mainDao) => {
     
     // set up intiial routes
     app.use("/api/v1/tsuyo", makeRouter(
-        mainDao.exercisesDAO,
-        mainDao.workoutsDAO,
-        mainDao.setsDAO))
-    app.use("/api/v1/user", makeUserRouter(mainDao.setsDAO))
+        mainDao.exercisesDao,
+        mainDao.workoutsDao,
+        mainDao.setsDao))
+
+    app.use("/api/v1/user", makeUserRouter(mainDao.usersDao))
     app.use("*", (req, res) => res.status(404).json({ error: "not found" }))
     
     return app
