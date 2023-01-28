@@ -16,9 +16,9 @@ const makeRouter = (exercisesDao, workoutsDao, setsDao) => {
     const router = express.Router()
 
     // initialise controllers
-    const exercisesController = ExercisesController(exercisesDao)
-    const setsController = SetsController(setsDao)
-    const workoutsController = WorkoutsController(workoutsDao)
+    const exercisesController = new ExercisesController(exercisesDao)
+    const setsController = new SetsController(setsDao)
+    const workoutsController = new WorkoutsController(workoutsDao)
     
     // set up authorisation middleware
     router.use(requireAuth)
