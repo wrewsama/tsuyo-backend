@@ -10,7 +10,7 @@ export default class UserController {
     /**
      * Processes the user's login request.
      */
-    static async loginUser(req, res, next) {
+    async loginUser(req, res, next) {
         try {
             const { email, password } = req.body
             const response = await this.userDao.loginUser(email, password)
@@ -30,7 +30,7 @@ export default class UserController {
     /**
      * Creates a new user in the database.
      */
-    static async signupUser(req, res, next) {
+    async signupUser(req, res, next) {
         try {
             const { email, password } = req.body
             const response = await this.userDao.signupUser(email, password)

@@ -10,7 +10,7 @@ export default class ExercisesController {
     /**
      * Gets all the Exercises in the database.
      */
-    static async apiGetExercises(req, res, next) {
+    async apiGetExercises(req, res, next) {
         let filters = {}
         if (req.query.name) {
             filters.name = req.query.name
@@ -26,7 +26,7 @@ export default class ExercisesController {
     /**
      * Gets the Exercise matching the id given in the url params.
      */
-    static async apiGetExerciseById(req, res, next) {
+    async apiGetExerciseById(req, res, next) {
         try {
             let id = req.params.id || {}
             let exercise = await this.exercisesDao.getExerciseById(id)
@@ -44,7 +44,7 @@ export default class ExercisesController {
     /**
      * Adds a new Exercise to the database.
      */
-    static async apiPostExercise(req, res, next) {
+    async apiPostExercise(req, res, next) {
         try {
             const name = req.body.name
             const desc = req.body.desc
@@ -69,7 +69,7 @@ export default class ExercisesController {
      * Gets the exercise's id from the query part of the url, then deletes
      * that document from the database.
      */
-    static async apiDeleteExercise(req, res, next) {
+    async apiDeleteExercise(req, res, next) {
         try {
             const exerciseId = req.query.id
             console.log(exerciseId)
@@ -89,7 +89,7 @@ export default class ExercisesController {
     /**
      * Updates an Exercise in the database.
      */
-    static async apiUpdateExercise(req, res, next) {
+    async apiUpdateExercise(req, res, next) {
         try {
             const exerciseId = req.body.id
             const name = req.body.name

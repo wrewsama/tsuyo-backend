@@ -10,7 +10,7 @@ export default class WorkoutsController {
     /**
      * Adds a workout to the database.
      */
-    static async apiPostWorkout(req, res, next) {
+    async apiPostWorkout(req, res, next) {
         try {
             const date = req.body.date
             const response = await this.workoutsDao.addWorkout(date)
@@ -29,7 +29,7 @@ export default class WorkoutsController {
     /**
      * Gets all the workouts in the database.
      */
-    static async apiGetWorkouts(req, res, next) {
+    async apiGetWorkouts(req, res, next) {
         const response = await this.workoutsDao.getWorkouts()
 
         res.json(response)
@@ -41,7 +41,7 @@ export default class WorkoutsController {
      * Takes the id from the url's params and sends the corresponding Workout
      * document in the response.
      */
-    static async apiGetWorkoutById(req, res, next) {
+    async apiGetWorkoutById(req, res, next) {
         try {
             let id = req.params.id || {}
             let workout = await this.workoutsDao.getWorkoutById(id)
@@ -62,7 +62,7 @@ export default class WorkoutsController {
      * Gets the id from the url's query part and sends the corresponding
      * Workout document to the response.
      */
-    static async apiDeleteWorkout(req, res, next) {
+    async apiDeleteWorkout(req, res, next) {
         try {
             const workoutId = req.query.id
             const response = await this.workoutsDao.deleteWorkout(workoutId)
