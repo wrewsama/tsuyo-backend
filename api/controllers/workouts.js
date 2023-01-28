@@ -1,16 +1,19 @@
-import WorkoutsDAO from "../../dao/workoutsDAO.js"
-
 /**
  * Handles the API requests to the /workouts route.
  */
 export default class WorkoutsController {
+
+    constructor(dao) {
+        this.workoutsDao = dao
+    }
+
     /**
      * Adds a workout to the database.
      */
     static async apiPostWorkout(req, res, next) {
         try {
             const date = req.body.date
-            const response = await WorkoutsDAO.addWorkout(date)
+            const response = await this.workoutsDao.addWorkout(date)
 
             let { error } = response
             if (error) {
@@ -27,7 +30,7 @@ export default class WorkoutsController {
      * Gets all the workouts in the database.
      */
     static async apiGetWorkouts(req, res, next) {
-        const response = await WorkoutsDAO.getWorkouts()
+        const response = await this.workoutsDao.getWorkouts()
 
         res.json(response)
     }
@@ -41,7 +44,7 @@ export default class WorkoutsController {
     static async apiGetWorkoutById(req, res, next) {
         try {
             let id = req.params.id || {}
-            let workout = await WorkoutsDAO.getWorkoutById(id)
+            let workout = await this.workoutsDao.getWorkoutById(id)
 
             if (!workout) {
                 res.status(404).json({ error: "Not found" })
@@ -62,7 +65,7 @@ export default class WorkoutsController {
     static async apiDeleteWorkout(req, res, next) {
         try {
             const workoutId = req.query.id
-            const response = await WorkoutsDAO.deleteWorkout(workoutId)
+            const response = await this.workoutsDao.deleteWorkout(workoutId)
 
             let { error } = response
             if (error) {
