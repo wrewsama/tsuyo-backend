@@ -1,9 +1,13 @@
-import ExercisesDAO from "../../dao/exercisesDAO.js"
-
 /**
  * Handles the API requests to the /exercises route.
  */
 export default class ExercisesController {
+    static exercisesDao
+
+    static init(dao) {
+        ExercisesController.exercisesDao = dao
+    }
+
     /**
      * Gets all the Exercises in the database.
      */
@@ -15,7 +19,7 @@ export default class ExercisesController {
         const userId = req.user._id
         filters.userId = userId
         
-        const response = await ExercisesDAO.getExercises(filters)
+        const response = await ExercisesController.exercisesDao.getExercises(filters)
 
         res.json(response)
     }
@@ -26,7 +30,7 @@ export default class ExercisesController {
     static async apiGetExerciseById(req, res, next) {
         try {
             let id = req.params.id || {}
-            let exercise = await ExercisesDAO.getExerciseById(id)
+            let exercise = await ExercisesController.exercisesDao.getExerciseById(id)
 
             if (!exercise) {
                 res.status(404).json({ error: "Not found" })
@@ -47,7 +51,7 @@ export default class ExercisesController {
             const desc = req.body.desc
             const userId = req.user._id
 
-            const response = await ExercisesDAO.addExercise(name, desc, userId)
+            const response = await ExercisesController.exercisesDao.addExercise(name, desc, userId)
 
             let { error } = response
             if (error) {
@@ -70,7 +74,7 @@ export default class ExercisesController {
         try {
             const exerciseId = req.query.id
             console.log(exerciseId)
-            const response = await ExercisesDAO.deleteExercise(exerciseId)
+            const response = await ExercisesController.exercisesDao.deleteExercise(exerciseId)
 
             let { error } = response
             if (error) {
@@ -92,7 +96,7 @@ export default class ExercisesController {
             const name = req.body.name
             const desc = req.body.desc
 
-            const response = await ExercisesDAO.updateExercise(exerciseId, name, desc)
+            const response = await ExercisesController.exercisesDao.updateExercise(exerciseId, name, desc)
 
             let { error } = response
             if (error) {

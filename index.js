@@ -1,7 +1,6 @@
-import app from "./server.js"
-import mongodb from "mongodb"
+import makeApp from "./server.js"
 import dotenv from "dotenv"
-import ExercisesDAO from "./dao/exercisesDAO.js"
+import mainDAO from "./dao/mainDAO.js"
 import mongoose from 'mongoose'
 
 // load in environment vars
@@ -18,6 +17,9 @@ const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established successfully")
 })
+
+// initialise express app with database
+const app = makeApp(mainDAO)
 
 // start web server
 app.listen(port, () => {

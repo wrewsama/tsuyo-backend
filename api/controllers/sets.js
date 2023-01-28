@@ -1,9 +1,13 @@
-import SetsDAO from '../../dao/setsDAO.js'
-
 /**
  * Handles the API requests to the /sets route.
  */
 export default class SetsController {
+    static setsDao
+
+    static init(dao) {
+        SetsController.setsDao = dao
+    }
+
     /**
      * Adds a set to the database.
      */
@@ -14,7 +18,7 @@ export default class SetsController {
             const weight = req.body.weight
             const reps = req.body.reps
 
-            const response = await SetsDAO.addSet(wid, eid, weight, reps)
+            const response = await SetsController.setsDao.addSet(wid, eid, weight, reps)
             
             let { error } = response
             if (error) {
@@ -31,7 +35,7 @@ export default class SetsController {
      * Gets all the Sets in the database.
      */
     static async apiGetSets(req, res, next) {
-        const response = await SetsDAO.getSets()
+        const response = await SetsController.setsDao.getSets()
 
         res.json(response)
     }
@@ -45,7 +49,7 @@ export default class SetsController {
     static async apiGetSetsByExerciseId(req, res, next) {
         try {
             let exerciseId = req.params.eid || {}
-            let response = await SetsDAO.getSetsByExerciseId(exerciseId)
+            let response = await SetsController.setsDao.getSetsByExerciseId(exerciseId)
 
             let { error } = response
             if (error) {
@@ -68,7 +72,7 @@ export default class SetsController {
     static async apiDeleteSet(req, res, next) {
         try {
             const setId = req.query.id
-            const response = await SetsDAO.deleteSet(setId)
+            const response = await SetsController.setsDao.deleteSet(setId)
 
             let { error } = response
             if (error) {
@@ -90,7 +94,7 @@ export default class SetsController {
             const weight = req.body.weight
             const reps = req.body.reps
 
-            const response = await SetsDAO.updateSet(setId, weight, reps)
+            const response = await SetsController.setsDao.updateSet(setId, weight, reps)
 
             let { error } = response
             if (error) {
