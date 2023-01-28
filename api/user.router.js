@@ -11,13 +11,13 @@ const makeUserRouter = (userDao) => {
     const userRouter = express.Router()
 
     // initialise controller
-    const userController = new UserController(userDao)
+    UserController.init(userDao)
     
     // login
-    userRouter.post('/login', userController.loginUser)
+    userRouter.post('/login', UserController.loginUser)
     
     // signup
-    userRouter.post('/signup', userController.signupUser)
+    userRouter.post('/signup', UserController.signupUser)
     
     return userRouter 
 }

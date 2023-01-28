@@ -2,18 +2,20 @@
  * Handles the login and signup API requests.
  */
 export default class UserController {
-    
-    constructor(dao) {
-        this.userDao = dao
+    static userDao
+
+    static init (dao) {
+        UserController.userDao = dao
     }
     
     /**
      * Processes the user's login request.
      */
-    async loginUser(req, res, next) {
+    static async loginUser(req, res, next) {
         try {
             const { email, password } = req.body
-            const response = await this.userDao.loginUser(email, password)
+            const response = await UserController.userDao.loginUser(email,
+                                                                    password)
             
             let { error } = response
             if (error) {
@@ -30,10 +32,11 @@ export default class UserController {
     /**
      * Creates a new user in the database.
      */
-    async signupUser(req, res, next) {
+    static async signupUser(req, res, next) {
         try {
             const { email, password } = req.body
-            const response = await this.userDao.signupUser(email, password)
+            const response = await UserController.userDao.signupUser(email,
+                                                                     password)
             
             let { error } = response
             if (error) {
