@@ -1,10 +1,48 @@
 import request from 'supertest'
-import app from "../server.js"
+import makeApp from "../server.js"
+import mainDAO from './testDAOs/mainDAO.js'
+
+const app = makeApp(mainDAO)
 
 describe("Sign Up", () => {
-    test("Should respond with status code 200", async () => {
+
+    beforeEach(() => {
+        mainDAO.usersDao.signupUser.mockReset()
+    })
+    test("Should call the signup function once", async () => {
         const response = await request(app).post('/api/v1/user/signup/').send({
-            email: "a@a.com",
+            email: "b@a.com",
+            password: "a"
+        })
+        expect(mainDAO.usersDao.signupUser.mock.calls.length).toBe(1)
+    })
+
+    test("Should correctly take in the given email and password", async () => {
+        const response = await request(app).post('/api/v1/user/signup/').send({
+            email: "b@a.com",
+            password: "a"
+        })
+        expect(mainDAO.usersDao.signupUser.mock.calls[0][0]).toBe("b@a.com")
+        expect(mainDAO.usersDao.signupUser.mock.calls[0][1]).toBe("a")
+    })
+
+    test("Should respond with json object containing email", async () => {
+        mainDAO.usersDao.signupUser.mockResolvedValue({
+            email: "b@a.com"
+        })
+        const response = await request(app).post('/api/v1/user/signup/').send({
+            email: "b@a.com",
+            password: "a"
+        })
+        expect(response.body.email).toBe("b@a.com")
+    })
+
+    test("Should respond with a 200 status code", async () => {
+        mainDAO.usersDao.signupUser.mockResolvedValue({
+            email: "a"
+        })
+        const response = await request(app).post('/api/v1/user/signup/').send({
+            email: "b@a.com",
             password: "a"
         })
         expect(response.statusCode).toBe(200)
