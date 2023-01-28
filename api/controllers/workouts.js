@@ -2,18 +2,19 @@
  * Handles the API requests to the /workouts route.
  */
 export default class WorkoutsController {
+    static workoutsDao
 
-    constructor(dao) {
-        this.workoutsDao = dao
+    static init(dao) {
+        WorkoutsController.workoutsDao = dao
     }
 
     /**
      * Adds a workout to the database.
      */
-    async apiPostWorkout(req, res, next) {
+    static async apiPostWorkout(req, res, next) {
         try {
             const date = req.body.date
-            const response = await this.workoutsDao.addWorkout(date)
+            const response = await WorkoutsController.workoutsDao.addWorkout(date)
 
             let { error } = response
             if (error) {
@@ -29,8 +30,8 @@ export default class WorkoutsController {
     /**
      * Gets all the workouts in the database.
      */
-    async apiGetWorkouts(req, res, next) {
-        const response = await this.workoutsDao.getWorkouts()
+    static async apiGetWorkouts(req, res, next) {
+        const response = await WorkoutsController.workoutsDao.getWorkouts()
 
         res.json(response)
     }
@@ -41,10 +42,10 @@ export default class WorkoutsController {
      * Takes the id from the url's params and sends the corresponding Workout
      * document in the response.
      */
-    async apiGetWorkoutById(req, res, next) {
+    static async apiGetWorkoutById(req, res, next) {
         try {
             let id = req.params.id || {}
-            let workout = await this.workoutsDao.getWorkoutById(id)
+            let workout = await WorkoutsController.workoutsDao.getWorkoutById(id)
 
             if (!workout) {
                 res.status(404).json({ error: "Not found" })
@@ -62,10 +63,10 @@ export default class WorkoutsController {
      * Gets the id from the url's query part and sends the corresponding
      * Workout document to the response.
      */
-    async apiDeleteWorkout(req, res, next) {
+    static async apiDeleteWorkout(req, res, next) {
         try {
             const workoutId = req.query.id
-            const response = await this.workoutsDao.deleteWorkout(workoutId)
+            const response = await WorkoutsController.workoutsDao.deleteWorkout(workoutId)
 
             let { error } = response
             if (error) {

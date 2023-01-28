@@ -2,15 +2,16 @@
  * Handles the API requests to the /exercises route.
  */
 export default class ExercisesController {
+    static exercisesDao
 
-    constructor(dao) {
-        this.exercisesDao = dao
+    static init(dao) {
+        ExercisesController.exercisesDao = dao
     }
 
     /**
      * Gets all the Exercises in the database.
      */
-    async apiGetExercises(req, res, next) {
+    static async apiGetExercises(req, res, next) {
         let filters = {}
         if (req.query.name) {
             filters.name = req.query.name
@@ -18,7 +19,7 @@ export default class ExercisesController {
         const userId = req.user._id
         filters.userId = userId
         
-        const response = await this.exercisesDao.getExercises(filters)
+        const response = await ExercisesController.exercisesDao.getExercises(filters)
 
         res.json(response)
     }
@@ -26,10 +27,10 @@ export default class ExercisesController {
     /**
      * Gets the Exercise matching the id given in the url params.
      */
-    async apiGetExerciseById(req, res, next) {
+    static async apiGetExerciseById(req, res, next) {
         try {
             let id = req.params.id || {}
-            let exercise = await this.exercisesDao.getExerciseById(id)
+            let exercise = await ExercisesController.exercisesDao.getExerciseById(id)
 
             if (!exercise) {
                 res.status(404).json({ error: "Not found" })
@@ -44,13 +45,13 @@ export default class ExercisesController {
     /**
      * Adds a new Exercise to the database.
      */
-    async apiPostExercise(req, res, next) {
+    static async apiPostExercise(req, res, next) {
         try {
             const name = req.body.name
             const desc = req.body.desc
             const userId = req.user._id
 
-            const response = await this.exercisesDao.addExercise(name, desc, userId)
+            const response = await ExercisesController.exercisesDao.addExercise(name, desc, userId)
 
             let { error } = response
             if (error) {
@@ -69,11 +70,11 @@ export default class ExercisesController {
      * Gets the exercise's id from the query part of the url, then deletes
      * that document from the database.
      */
-    async apiDeleteExercise(req, res, next) {
+    static async apiDeleteExercise(req, res, next) {
         try {
             const exerciseId = req.query.id
             console.log(exerciseId)
-            const response = await this.exercisesDao.deleteExercise(exerciseId)
+            const response = await ExercisesController.exercisesDao.deleteExercise(exerciseId)
 
             let { error } = response
             if (error) {
@@ -89,13 +90,13 @@ export default class ExercisesController {
     /**
      * Updates an Exercise in the database.
      */
-    async apiUpdateExercise(req, res, next) {
+    static async apiUpdateExercise(req, res, next) {
         try {
             const exerciseId = req.body.id
             const name = req.body.name
             const desc = req.body.desc
 
-            const response = await this.exercisesDao.updateExercise(exerciseId, name, desc)
+            const response = await ExercisesController.exercisesDao.updateExercise(exerciseId, name, desc)
 
             let { error } = response
             if (error) {
